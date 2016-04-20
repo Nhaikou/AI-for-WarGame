@@ -4,6 +4,14 @@
 *.o
 *.obj
 
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
 # Precompiled Headers
 *.gch
 *.pch

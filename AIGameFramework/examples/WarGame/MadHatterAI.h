@@ -2,16 +2,20 @@
 #include "PlayerController.h"
 #include "JoystickController.h"
 
+using namespace yam2d;
 
 class MadHatterAI : public CharacterController
 {
 public:
-	MadHatterAI(yam2d::GameObject* owner, GameController* gameController, BotType botType)
+	MadHatterAI(GameObject* owner, GameController* gameController, BotType botType)
 		: CharacterController(owner, gameController, botType)
 		, m_gameObjectToGo(0)
 		, m_reachTolerance(0.0f)
 		, m_distanceToDestination(0.0f)
 		, m_collisionToHomeBase(false)
+		, m_gameObjectToShoot(0)
+		, m_predictionDistance(0.0f)
+		, m_aimTolerance(0)
 	{
 	}
 
@@ -19,7 +23,7 @@ public:
 	{
 	}
 
-	virtual void onMessage(const std::string& msgName, yam2d::Object* eventObject)
+	virtual void onMessage(const std::string& msgName, Object* eventObject)
 	{
 		// Call base class onMessage
 		CharacterController::onMessage(msgName, eventObject);
@@ -28,7 +32,7 @@ public:
 			CollisionEvent* collisionEvent = dynamic_cast<CollisionEvent*>(eventObject);
 			assert(collisionEvent != 0);
 			assert(collisionEvent->getMyGameObject() == getGameObject());
-			yam2d::GameObject* otherGo = collisionEvent->getOtherGameObject();
+			GameObject* otherGo = collisionEvent->getOtherGameObject();
 			std::string otherType = otherGo->getType();
 			if (otherType == "HomeBase")
 			{
@@ -64,7 +68,7 @@ public:
 		}
 	}
 
-	void setMoveTargetObject(const yam2d::GameObject* gameObjectToGo, float reachTolerance)
+	void setMoveTargetObject(const GameObject* gameObjectToGo, float reachTolerance)
 	{
 		if (gameObjectToGo == 0)
 		{
@@ -92,8 +96,10 @@ public:
 	}
 
 private:
-	const yam2d::GameObject* m_gameObjectToGo;
+	const GameObject *m_gameObjectToGo, *m_gameObjectToShoot;
 	float m_reachTolerance;
 	float m_distanceToDestination;
+	float m_predictionDistance;
+	float m_aimTolerance;
 	bool m_collisionToHomeBase;
 };
