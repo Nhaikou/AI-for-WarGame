@@ -8,54 +8,15 @@
 #include "GameApp.h"
 
 #include "ExampleBehaviours.h"
+#include "MadHatterAI.h"
 #include "JoystickController.h"
-
-
-
-class MyAI : public CharacterController
-{
-public:
-	MyAI(yam2d::GameObject* owner, GameController* gameController, BotType botType)
-		: CharacterController(owner, gameController, botType)
-	{
-	}
-
-	virtual ~MyAI(void)
-	{
-	}
-
-	virtual void onMessage(const std::string& msgName, yam2d::Object* eventObject)
-	{
-		// Call onMessage to base class
-		CharacterController::onMessage(msgName, eventObject);
-
-		// TODO: handle message...
-	}
-
-	// This virtual method is automatically called byt map/layer, when update is called from main.cpp
-	virtual void update(float deltaTime)
-	{
-		// Call update to base class
-		CharacterController::update(deltaTime);
-
-		// TODO: Update...
-	}
-
-private:
-
-};
-
-
-
-
-
 
 
 class MyPlayerController : public PlayerController
 {
 private:
 	std::string m_myTeamName;
-	std::vector< yam2d::Ref<MyAI> > m_myAIControllers;
+	std::vector< yam2d::Ref<MadHatterAI> > m_madHatterAIControllers;
 	std::vector< yam2d::Ref<JoystickController> > m_joystickControllers;
 	std::vector< yam2d::Ref<DirectMoverAI> > m_directMoverAIControllers;
 	std::vector< yam2d::Ref<AutoAttackFlagCarryingBot> > m_autoAttackFlagCarryingBots;
@@ -94,11 +55,11 @@ public:
 			return new CharacterController(ownerGameObject, gameController, type);
 		}
 
-		if (playerName == "MyAI")
+		if (playerName == "MadHatterAI")
 		{
-			MyAI* myAI = new MyAI(ownerGameObject, gameController, type);
-			m_myAIControllers.push_back(myAI);
-			return myAI;
+			MadHatterAI* m_madHatterAI = new MadHatterAI(ownerGameObject, gameController, type);
+			m_madHatterAIControllers.push_back(m_madHatterAI);
+			return m_madHatterAI;
 		}
 
 		if (playerName == "DirectMoverAI")
@@ -126,6 +87,12 @@ public:
 		for (size_t i = 0; i < m_directMoverAIControllers.size(); ++i)
 		{
 			m_directMoverAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
+		}
+
+		// MadHatterAI
+		for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
+		{
+			m_madHatterAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
 		}
 	}
 
@@ -219,6 +186,12 @@ public:
 				{
 					m_directMoverAIControllers[i]->setMoveTargetObject(homeBase, 1.0f);
 				}
+
+				// MadHatterAI
+				for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
+				{
+					m_madHatterAIControllers[i]->setMoveTargetObject(homeBase, 1.0f);
+				}
 			}
 			else
 			{
@@ -228,6 +201,12 @@ public:
 				for (size_t i = 0; i < m_directMoverAIControllers.size(); ++i)
 				{
 					m_directMoverAIControllers[i]->setMoveTargetObject(homeBase, 1.0f);
+				}
+
+				// MadHatterAI
+				for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
+				{
+					m_madHatterAIControllers[i]->setMoveTargetObject(homeBase, 1.0f);
 				}
 			}
 		}
@@ -249,6 +228,11 @@ public:
 			for (size_t i = 0; i < m_directMoverAIControllers.size(); ++i)
 			{
 				m_directMoverAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
+			}
+
+			for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
+			{
+				m_madHatterAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
 			}
 		}
 		else
@@ -313,8 +297,8 @@ int main(int argc, char *argv[])
 	app.disableLayer("GroundTypeColliders");
 	app.disableLayer("GroundMoveSpeed");
 	//app.setLayerOpacity("GroundMoveSpeed", 0.7f); 
-	//app.setDefaultGame("level1.tmx", "MyAI", "DirectMoverAI", 4);
-	app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "DirectMoverAI", 4);
+	app.setDefaultGame("level0.tmx", "MadHatterAI", "DirectMoverAI", 4);
+	//app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "DirectMoverAI", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", 4);
 	MyPlayerController player1Controller;

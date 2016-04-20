@@ -23,5 +23,8 @@
     <ClInclude Include="ExampleBehaviours.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MadHatterAI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
