@@ -85,10 +85,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PathFindingApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClosedList.h" />
     <ClInclude Include="ExampleBehaviours.h" />
     <ClInclude Include="MadHatterAI.h" />
+    <ClInclude Include="OpenList.h" />
+    <ClInclude Include="PathFindingApp.h" />
+    <ClInclude Include="SearchLevel.h" />
+    <ClInclude Include="SearchNode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

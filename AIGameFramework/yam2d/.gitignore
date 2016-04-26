@@ -8,13 +8,16 @@
 *.user
 *.log
 
+
+
 engine/lib/win32_vs10/Debug/*
 engine/build/win32_vs10/obj/*
 engine/lib/win32_vs13/Debug/*
 engine/build/win32_vs13/obj/*
 
-Tools/TmxMapViewer/build/Debug/*
+Debug/
 
+aigameframework/examples/WarGame/Debug
 
 Tutorials/1_TemplateProject/build/win32_vs10/Debug/*
 Tutorials/1_TemplateProject/build/win32_vs10/*.txt

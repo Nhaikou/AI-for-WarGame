@@ -1,3 +1,8 @@
+Debug/
+Release/
+*.tlog
+debug_log.txt
+
 # Compiled Object files
 *.slo
 *.lo
