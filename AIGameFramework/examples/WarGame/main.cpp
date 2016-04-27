@@ -110,6 +110,13 @@ public:
 		{
 			m_autoAttackFlagCarryingBots[i]->resetTargetToShoot();
 		}
+
+		// MadHatterAI reset shooting
+		for (size_t i = 0; i < m_madHatterAIControllers.size(); i++)
+		{
+			m_madHatterAIControllers[i]->resetTargetToShoot();
+			m_madHatterAIControllers[i]->resetMoveTargetObject();
+		}
 	}
 
 	// Called each frame. Update you player character controllers in this function.
@@ -176,6 +183,12 @@ public:
 				m_autoAttackFlagCarryingBots[i]->setTargetToShoot(itemEvent->getObject()->getGameObject(), 1.9f, 0.05f);
 			}
 			
+			// MadHatterAI shoot
+			for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
+			{
+				m_madHatterAIControllers[i]->setTargetToShoot(itemEvent->getObject()->getGameObject(), 1.9f, 0.05f);
+			}
+			
 
 			if (teamIndex == getMyTeamIndex())
 			{
@@ -190,6 +203,7 @@ public:
 				// MadHatterAI
 				for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
 				{
+					m_madHatterAIControllers[i]->resetTargetToShoot();
 					m_madHatterAIControllers[i]->setMoveTargetObject(homeBase, 1.0f);
 				}
 			}
@@ -221,7 +235,6 @@ public:
 				m_autoAttackFlagCarryingBots[i]->resetTargetToShoot();
 			}
 
-
 			// Item propped.
 			// Start going straight to dynamite
 			const yam2d::GameObject* dynamite = environmentInfo->getDynamite();
@@ -232,6 +245,7 @@ public:
 
 			for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
 			{
+				m_madHatterAIControllers[i]->resetTargetToShoot();
 				m_madHatterAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
 			}
 		}
@@ -297,7 +311,7 @@ int main(int argc, char *argv[])
 	app.disableLayer("GroundTypeColliders");
 	app.disableLayer("GroundMoveSpeed");
 	//app.setLayerOpacity("GroundMoveSpeed", 0.7f); 
-	app.setDefaultGame("level0.tmx", "MadHatterAI", "DirectMoverAI", 4);
+	app.setDefaultGame("level0.tmx", "MadHatterAI", "MadHatterAI", 4);
 	//app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "DirectMoverAI", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", 4);

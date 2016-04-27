@@ -49,14 +49,23 @@ public:
 	{
 		/// Call update to base class
 		CharacterController::update(deltaTime);
-		if (m_gameObjectToGo != 0)
+		if (m_gameObjectToGo != m_gameObjectToShoot)
 		{
 			// Move to position
 			m_distanceToDestination = moveDirectToPosition(m_gameObjectToGo->getPosition(), m_reachTolerance);
-		}
 
+			if (m_gameObjectToShoot != 0)
+			{
+				float rotation = m_gameObjectToShoot->getRotation();
+				slm::vec2 enemyForwardDir;
+				enemyForwardDir.x = cosf(rotation);
+				enemyForwardDir.y = sinf(rotation);
+				autoUsePrimaryWeapon(m_gameObjectToShoot->getPosition() + m_predictionDistance*enemyForwardDir, m_aimTolerance);
+			}
+		}
+	
 		// If has collided to home base, then drop bomb.
-		if (m_collisionToHomeBase)
+		else if (m_collisionToHomeBase)
 		{
 			// Obly if I has flag
 			if (hasItem())
@@ -66,6 +75,20 @@ public:
 
 			m_collisionToHomeBase = false;
 		}
+	}
+
+	void setTargetToShoot(GameObject* gameObjectToShoot, float predictionDistance, float aimTolerance)
+	{
+		m_gameObjectToShoot = gameObjectToShoot;
+		m_predictionDistance = predictionDistance;
+		m_aimTolerance = aimTolerance;
+	}
+
+	void resetTargetToShoot()
+	{
+		m_gameObjectToShoot = 0;
+		m_predictionDistance = 0.0f;
+		m_aimTolerance = 0.0f;
 	}
 
 	void setMoveTargetObject(const GameObject* gameObjectToGo, float reachTolerance)
