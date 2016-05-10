@@ -94,6 +94,12 @@ public:
 		{
 			m_madHatterAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
 		}
+		AIMapLayer *groundMoveSpeedLayer = environmentInfo->getAILayer("GroundMoveSpeed");
+		AIMapLayer *objectSpawnLayer = environmentInfo->getAILayer("ObjectSpawns");
+		AIMapLayer *groundTypeColliders = environmentInfo->getAILayer("GroundTypeColliders");
+
+			//app.disableLayer("ObjectSpawns");
+			//app.disableLayer("GroundTypeColliders");
 	}
 
 
@@ -186,7 +192,7 @@ public:
 			// MadHatterAI shoot
 			for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
 			{
-				m_madHatterAIControllers[i]->setTargetToShoot(itemEvent->getObject()->getGameObject(), 1.9f, 0.05f);
+				m_madHatterAIControllers[i]->setTargetToShoot(itemEvent->getObject()->getGameObject(), 1.1f, 0.05f);
 			}
 			
 
@@ -310,7 +316,7 @@ int main(int argc, char *argv[])
 	app.disableLayer("ObjectSpawns");
 	app.disableLayer("GroundTypeColliders");
 	app.disableLayer("GroundMoveSpeed");
-	//app.setLayerOpacity("GroundMoveSpeed", 0.7f); 
+	app.setLayerOpacity("GroundMoveSpeed", 0.7f); 
 	app.setDefaultGame("level0.tmx", "MadHatterAI", "MadHatterAI", 4);
 	//app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "DirectMoverAI", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", 4);

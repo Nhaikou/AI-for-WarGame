@@ -22,7 +22,7 @@ namespace
 
 	bool isGreen(unsigned char* p)
 	{
-		return p[1] > 200;
+		return p[1] == 0;
 	}
 
 	bool isBlue(unsigned char* p)

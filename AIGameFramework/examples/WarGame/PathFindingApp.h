@@ -17,23 +17,18 @@ public:
 	virtual ~PathFindingApp();
 
 	// Updates the app
-	bool update(yam2d::ESContext* ctx, float deltaTime);
+	bool update(slm::vec2 aiStartPos, slm::vec2 aiEndPos);
 	
 	void setMapLayer(AIMapLayer *mapLayer){ this->mapLayer = mapLayer; }
 
 	std::vector<slm::vec2> getMapPoints(){ return mapPoints; }
 
-	void quit()
-	{
-		m_appRunning = false;
-	}
-
 	// Private member variables and methods:
 private:
 	AIMapLayer *mapLayer;
 	std::vector<slm::vec2> mapPoints;
-	bool m_appRunning;
-	yam2d::Ref<yam2d::SpriteBatchGroup> m_batch;
+	// bool m_appRunning;
+	//yam2d::Ref<yam2d::SpriteBatchGroup> m_batch;
 	/*yam2d::Ref<yam2d::Texture> m_textureStartCase;
 	yam2d::Ref<yam2d::StreamTexture> m_texturePathFound;
 	yam2d::Ref<yam2d::Sprite> m_spriteStartCase;
