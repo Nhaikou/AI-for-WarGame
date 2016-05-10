@@ -34,8 +34,8 @@ namespace
 class SearchLevel
 {
 public:
-	SearchLevel(Texture *input)
-		: inputTexture(input){}
+	SearchLevel(AIMapLayer *inputLayer)
+		: inputLayer(inputLayer){}
 
 	// Returns actual distance from "fromNode" to "toPos" (these are adjacent nodes always, so the length is 1)
 	float getG(SearchNode *fromNode, const Position &toPos)
@@ -57,11 +57,11 @@ public:
 	// Returns true, if given point is walkable
 	bool isWalkable(int posX, int posY)
 	{
-		if (posX < 0 || posY < 0 || posX >= inputTexture->getWidth() || posY >= inputTexture->getHeight())
+		if (posX < 0 || posY < 0 || posX >= inputLayer->getWidth() || posY >= inputLayer->getHeight())
 		{
 			return false;
 		}
-		unsigned char *pixel = inputTexture->getPixel(posX, posY);
+		unsigned char *pixel = inputLayer->getPixel(posX, posY);
 		bool isNotWalkable = isGreen(pixel);
 		return !isNotWalkable;
 	}
@@ -90,5 +90,5 @@ public:
 	}
 
 private:
-	Texture *inputTexture;
+	AIMapLayer *inputLayer;
 };

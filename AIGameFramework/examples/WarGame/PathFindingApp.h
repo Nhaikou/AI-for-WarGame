@@ -6,6 +6,7 @@
 #include <Sprite.h>
 #include <SpriteBatch.h>
 #include <SpriteSheet.h>
+#include <AIMapLayer.h>
 
 
 class PathFindingApp : public yam2d::Object
@@ -17,9 +18,10 @@ public:
 
 	// Updates the app
 	bool update(yam2d::ESContext* ctx, float deltaTime);
+	
+	void setMapLayer(AIMapLayer *mapLayer){ this->mapLayer = mapLayer; }
 
-	// Draws the app
-	void render(yam2d::ESContext *ctx);
+	std::vector<slm::vec2> getMapPoints(){ return mapPoints; }
 
 	void quit()
 	{
@@ -28,15 +30,17 @@ public:
 
 	// Private member variables and methods:
 private:
+	AIMapLayer *mapLayer;
+	std::vector<slm::vec2> mapPoints;
 	bool m_appRunning;
 	yam2d::Ref<yam2d::SpriteBatchGroup> m_batch;
-	yam2d::Ref<yam2d::Texture> m_textureStartCase;
+	/*yam2d::Ref<yam2d::Texture> m_textureStartCase;
 	yam2d::Ref<yam2d::StreamTexture> m_texturePathFound;
 	yam2d::Ref<yam2d::Sprite> m_spriteStartCase;
 	yam2d::Ref<yam2d::Sprite> m_spritePathFound;
 	yam2d::Ref<yam2d::SpriteSheet> m_font;
 	yam2d::Ref<yam2d::Texture> m_fontTexture;
-	yam2d::Ref<yam2d::Text> m_text;
+	yam2d::Ref<yam2d::Text> m_text;*/
 
 	bool m_searchCompleted;
 	float m_searchTimer;
