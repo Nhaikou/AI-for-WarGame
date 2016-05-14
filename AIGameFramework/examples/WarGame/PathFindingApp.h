@@ -37,7 +37,7 @@ private:
 	yam2d::Ref<yam2d::Texture> m_fontTexture;
 	yam2d::Ref<yam2d::Text> m_text;*/
 
-	bool m_searchCompleted;
+	bool m_searchCompleted = false;
 	float m_searchTimer;
 
 	bool doPathfinding(int startX, int startY, int endX, int endY);
