@@ -283,6 +283,34 @@ ESContext *esGetCurrentContext()
 {
 	return g_lastCtx;
 }
+namespace
+{
+	std::string wstrtostr(const std::wstring &wstr)
+	{
+		char *szTo = new char[wstr.length() + 1];
+		szTo[wstr.size()] = '\0';
+		WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, szTo, (int)wstr.length(), NULL, NULL);
+		std::string strTo(szTo);
+		delete[] szTo;
+		return strTo;
+	}
+
+	std::wstring strtowstr(const std::string &str)
+	{
+		wchar_t *szTo = new wchar_t[str.length() + 1];
+		szTo[str.size()] = '\0';
+		MultiByteToWideChar(CP_UTF8, 0, &str[0], -1, szTo, (int)str.length());
+		std::wstring strTo(szTo, str.length());
+		delete[] szTo;
+		return strTo;
+	}
+
+
+	std::wstring strtowstr(const char* str)
+	{
+		return strtowstr(std::string(str));
+	}
+}
 
 GLboolean winCreate ( ESContext *esContext, const char *title, bool resizable )
 {
@@ -323,10 +351,12 @@ GLboolean winCreate ( ESContext *esContext, const char *title, bool resizable )
 	windowRect.bottom = esContext->height;
 
 	AdjustWindowRect ( &windowRect, wStyle, FALSE );
-	
+	std::string t = title;
+
+
 	esContext->hWnd = CreateWindowEx(WS_EX_LEFT,
 									"opengles1.x",
-									title,
+									t.c_str(),
 									wStyle,
 									10,
 									10,

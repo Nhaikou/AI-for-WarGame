@@ -140,8 +140,13 @@ void esLogEngineError( const char *formatStr, ... )
 
 	va_end ( params );
 
+#if defined(_WIN32) && defined(_DEBUG)
+	DebugBreak(); 
+#else
 	std::string s = buf;
 	throw std::string(s);
+#endif
+
 #else
 	(void)formatStr;
 #endif

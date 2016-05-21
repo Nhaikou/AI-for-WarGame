@@ -12,6 +12,8 @@
 #include <es_util.h>
 #include <PropertySet.h>
 
+#define APP_VERSION "0.2"
+
 class GameApp;
 
 /**
@@ -61,6 +63,7 @@ public:
 
 	void setLayerOpacity(const char* const layerName, float val);
 
+
 	void setPlayer1Controller(PlayerController* playerController) { m_player1Controller = playerController; }
 	PlayerController* getPlayer1Controller() { return m_player1Controller; }
 	void setPlayer2Controller(PlayerController* playerController) { m_player2Controller = playerController; }
@@ -70,7 +73,9 @@ public:
 		const char* const levelFileName, 
 		const char* const team1ControllerComponentName, 
 		const char* const team2ControllerComponentName,
-		int numBotsPerTeam);
+		const char* const localTeamNameInNetGame,
+		int numBotsPerTeam,
+		const char* const defaultHostName = 0);
 
 	int run();
 
@@ -89,17 +94,31 @@ public:
 	// Draw game
 	static void drawApp(yam2d::ESContext *ctx);
 
+	void setLevelFileName(const std::string&);
+
+	const std::string& getLocalTeamName() const;
 	const std::string& getLevelFileName() const;
 	const std::string& getTeam1ControllerComponentName() const;
 	const std::string& getTeam2ControllerComponentName() const;
 
+
+
+	void setPlayerName(int index, const std::string name) {
+		m_playerNames[index] = name;
+	}
+
+	std::string getHostName() const;
 
 	int getDefaultNumBotsPerTeam() const { return m_defaultNumBotsPerTeam; }
 	const std::vector<std::string>& getDisabledLayers() const { return m_disabledLayers; }
 	const std::vector<std::string>& getOpacityLayers() const { return m_opacityLayers; }
 	const std::vector<float>& getOpacityValues() const { return m_opacityValues; }
 
+	yam2d::PropertySet& getCmdArgs() { return m_cmdArgs; }
 	const yam2d::PropertySet& getCmdArgs() const { return m_cmdArgs; }
+
+
+
 private:
 
 	/// Updates the current state.
@@ -117,11 +136,17 @@ private:
 	std::string m_defaultLevelFileName;
 	std::string m_defaultTeam1ControllerComponentName;
 	std::string m_defaultTeam2ControllerComponentName;
+
+	std::string m_playerNames[2];
+
+	std::string m_defaultHostName;
+	std::string m_localTeamNameInNetGame;
 	std::vector<std::string> m_disabledLayers;
 	std::vector<std::string> m_opacityLayers;
 	std::vector<float> m_opacityValues;
 	int m_defaultNumBotsPerTeam;
-
+	int m_screenWidth;
+	int m_screenHeight;
 	yam2d::PropertySet m_cmdArgs;
 };
 

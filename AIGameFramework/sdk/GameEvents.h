@@ -21,25 +21,29 @@ class PickableItemController;
 class CollisionEvent : public yam2d::Object
 {
 public:
-	CollisionEvent(b2Body* bA, b2Body* bB, const yam2d::vec2& localNormal);
+	CollisionEvent(yam2d::GameObject* goA, yam2d::GameObject* goB);
+//CollisionEvent(b2Body* bA, b2Body* bB, const yam2d::vec2& localNormal = yam2d::vec2(0.0f));
+	CollisionEvent(PhysicsBody* goA, PhysicsBody* goB, const yam2d::vec2& localNormal = yam2d::vec2(0.0f));
 
 	virtual ~CollisionEvent();
 
-	PhysicsBody* getMyBody() const { return m_myBody; }
-	PhysicsBody* getOtherBody() const { return m_otherBody; }
+	bool isValid() const;
+
+	//PhysicsBody* getMyBody() const { return m_myBody; }
+	//PhysicsBody* getOtherBody() const { return m_otherBody; }
 	yam2d::GameObject* getMyGameObject() const;
 	yam2d::GameObject* getOtherGameObject() const;
 
 	const yam2d::vec2& getLocalNormal() const { return m_localNormal; }
-	b2Body* getBodyA() const { return m_bA; }
-	b2Body* getBodyB() const { return m_bB; }
+	//b2Body* getBodyA() const { return m_bA; }
+	//b2Body* getBodyB() const { return m_bB; }
 	bool isCollisionToSelf() const;
 private:
 	PhysicsBody* m_myBody;
 	PhysicsBody* m_otherBody;
 	yam2d::vec2 m_localNormal;
-	b2Body* m_bA;
-	b2Body* m_bB;
+	yam2d::GameObject* m_goA;
+	yam2d::GameObject* m_goB;
 };
 
 
@@ -66,10 +70,11 @@ public:
 
 	virtual ~ItemEvent();
 
-	yam2d::GameObject* getGameObject() const;
+	yam2d::GameObject* getCharacterGameObject() const;
 	yam2d::GameObject* getItemGameObject() const;
 
-	CharacterController* getObject() const { return m_object; }
+	// Which character controller picked the item.
+	CharacterController* getCharacterController() const { return m_object; }
 	PickableItemController* getItem() const { return m_item; }
 private:
 	CharacterController* m_object;
