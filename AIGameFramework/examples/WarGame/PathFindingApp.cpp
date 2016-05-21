@@ -28,8 +28,6 @@ bool PathFindingApp::update(slm::vec2 aiStartPos, slm::vec2 aiEndPos)
 	
 	int width = mapLayer->getWidth();
 	int height = mapLayer->getHeight();
-	//int bpp = mapLayer->getBytesPerPixel();
-	m_searchCompleted = false;
 	
 
 	if (!m_searchCompleted)
@@ -52,6 +50,7 @@ bool PathFindingApp::update(slm::vec2 aiStartPos, slm::vec2 aiEndPos)
 		else
 		{
 			assert(0);
+			return false;
 		}
 	} // if (!m_searchCompleted)
 
