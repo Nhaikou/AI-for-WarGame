@@ -1,6 +1,9 @@
+#pragma once
+
 #include "GameEvents.h"
 #include "PlayerController.h"
 #include "JoystickController.h"
+#include "PathFindingApp.h"
 
 using namespace yam2d;
 
@@ -16,6 +19,7 @@ public:
 		, m_gameObjectToShoot(0)
 		, m_predictionDistance(0.0f)
 		, m_aimTolerance(0)
+		, m_aiObject(owner)
 	{
 	}
 
@@ -49,9 +53,10 @@ public:
 	{
 		/// Call update to base class
 		CharacterController::update(deltaTime);
-		if (m_gameObjectToGo != m_gameObjectToShoot)
+		if (m_gameObjectToGo != 0 && !mapPoints.empty())
 		{
 			// Move to position
+			slm::vec2 movePosition(mapPoints.back().x, mapPoints.back().y);
 			m_distanceToDestination = moveDirectToPosition(m_gameObjectToGo->getPosition(), m_reachTolerance);
 
 			if (m_gameObjectToShoot != 0)
@@ -62,6 +67,11 @@ public:
 				enemyForwardDir.y = sinf(rotation);
 				autoUsePrimaryWeapon(m_gameObjectToShoot->getPosition() + m_predictionDistance*enemyForwardDir, m_aimTolerance);
 			}
+		}
+
+		if (m_distanceToDestination <= m_reachTolerance && !mapPoints.empty())
+		{
+			mapPoints.pop_back();
 		}
 	
 		// If has collided to home base, then drop bomb.
@@ -77,6 +87,7 @@ public:
 		}
 	}
 
+	// Enemies to shoot
 	void setTargetToShoot(GameObject* gameObjectToShoot, float predictionDistance, float aimTolerance)
 	{
 		m_gameObjectToShoot = gameObjectToShoot;
@@ -84,6 +95,7 @@ public:
 		m_aimTolerance = aimTolerance;
 	}
 
+	// Reset shooting
 	void resetTargetToShoot()
 	{
 		m_gameObjectToShoot = 0;
@@ -91,6 +103,7 @@ public:
 		m_aimTolerance = 0.0f;
 	}
 
+	// Go to the target object
 	void setMoveTargetObject(const GameObject* gameObjectToGo, float reachTolerance)
 	{
 		if (gameObjectToGo == 0)
@@ -101,6 +114,7 @@ public:
 
 		m_gameObjectToGo = gameObjectToGo;
 		m_reachTolerance = reachTolerance;
+		findPath();
 		m_distanceToDestination = slm::length(m_gameObjectToGo->getPosition() - getGameObject()->getPosition());
 		preferPickItem();
 	}
@@ -111,6 +125,7 @@ public:
 		m_reachTolerance = 0.0f;
 		m_distanceToDestination = 0.0f;
 		stop();
+		clearMapPoints();
 	}
 
 	float getDistanceToDestination() const
@@ -118,8 +133,32 @@ public:
 		return m_distanceToDestination;
 	}
 
+	void findPath()
+	{
+		mapPoints = pathFinding->doPathfinding(m_aiObject->getPosition().x, m_aiObject->getPosition().y, m_gameObjectToGo->getPosition().x, m_gameObjectToGo->getPosition().y);
+	}
+
+	void setPathFindingApp(PathFindingApp *pathFinding)
+	{
+		this->pathFinding = pathFinding;
+	}
+
+	void clearMapPoints()
+	{
+		mapPoints.clear();
+	}
+
+	std::vector<slm::vec2>& getMapPoints()
+	{
+		return mapPoints;
+	}
+
 private:
-	const GameObject *m_gameObjectToGo, *m_gameObjectToShoot;
+	// Path finding
+	PathFindingApp *pathFinding;
+	std::vector<slm::vec2> mapPoints;
+
+	const GameObject *m_gameObjectToGo, *m_gameObjectToShoot, *m_aiObject;
 	float m_reachTolerance;
 	float m_distanceToDestination;
 	float m_predictionDistance;

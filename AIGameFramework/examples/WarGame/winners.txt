@@ -2,3 +2,9 @@ DirectMoverAI
 DirectMoverAI
 MadHatterAI
 MadHatterAI
+MadHatterAI
+MadHatterAI
+AutoAttackFlagCarryingBot
+MadHatterAI
+MadHatterAI
+MadHatterAI

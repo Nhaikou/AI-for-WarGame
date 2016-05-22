@@ -3,6 +3,7 @@
 #include "SearchNode.h"
 #include "Texture.h"
 #include "PathFindingApp.h"
+#include "AIMapLayer.h"
 
 using namespace yam2d;	// For yam2d files
 
@@ -28,6 +29,41 @@ namespace
 	bool isBlue(unsigned char* p)
 	{
 		return p[2] > 200;
+	}
+
+	bool isWhite(unsigned char* p)
+	{
+		float v = p[0];
+		v = v / 255.f;
+
+		if (v == 1)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool isBlack(unsigned char* p)
+	{
+		float v = p[0];
+		v = v / 255.f;
+		if (v == 0)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool isGrey(unsigned char* p)
+	{
+		float v = p[0];
+		v = v / 255.f;
+
+		if (v >= 0.4f && v <= 0.6f)
+		{
+			return true;
+		}
+		return false;
 	}
 }
 
