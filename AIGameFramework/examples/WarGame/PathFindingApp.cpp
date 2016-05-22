@@ -23,40 +23,6 @@ PathFindingApp::~PathFindingApp()
 }
 
 
-//bool PathFindingApp::update(slm::vec2 aiStartPos, slm::vec2 aiEndPos)
-//{
-//	
-//	int width = mapLayer->getWidth();
-//	int height = mapLayer->getHeight();
-//	
-//
-//	if (!m_searchCompleted)
-//	{
-//		// Find start and end
-//		int startX, startY, endX, endY;
-//		startX = startY = endX = endY = -1;
-//		
-//		startX = aiStartPos.x;
-//		startY = aiStartPos.y;
-//		
-//		endX = aiEndPos.x;
-//		endY = aiEndPos.y;	
-//
-//		// Update path find!! Set m_searchCompleted to true, when path found, so the texture data is updated.
-//		if (startX >= 0 && startY >= 0 && endX >= 0 && endY >= 0)
-//		{
-//			m_searchCompleted = doPathfinding(startX, startY, endX, endY);
-//		}
-//		else
-//		{
-//			assert(0);
-//			return false;
-//		}
-//	} // if (!m_searchCompleted)
-//
-//	return true;
-//}
-
 std::vector<slm::vec2> PathFindingApp::doPathfinding(int startX, int startY, int endX, int endY)
 {
 	bool done = true;

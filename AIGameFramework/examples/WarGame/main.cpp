@@ -366,9 +366,9 @@ int main(int argc, char *argv[])
 	app.disableLayer("GroundTypeColliders");
 	//app.disableLayer("GroundMoveSpeed");
 	//app.setLayerOpacity("DebugLayer", 0.7f); 
-	app.setLayerOpacity("GroundMoveSpeed", 0.7f); 
+	app.setLayerOpacity("GroundMoveSpeed", 0.5f); 
 	//app.setDefaultGame("level1.tmx", "MyAI", "DirectMoverAI", 4);
-	app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "MadHatterAI", "YourNameHere", 4);
+	app.setDefaultGame("Level0.tmx", "MadHatterAI", "MadHatterAI", "YourNameHere", 4);
 //	app.setDefaultGame("Level1.tmx", "AutoAttackFlagCarryingBot", "JoystickController", "YourNameHere", 4);
 //	app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "DirectMoverAI", "YourNameHere", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", "YourNameHere", 4);

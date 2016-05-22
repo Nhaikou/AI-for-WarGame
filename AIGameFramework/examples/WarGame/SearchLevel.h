@@ -9,28 +9,6 @@ using namespace yam2d;	// For yam2d files
 
 namespace
 {
-	void setPathColor(yam2d::StreamTexture* t, int x, int y)
-	{
-		t->getPixel(x, y)[0] = 0xff;
-		t->getPixel(x, y)[1] = 0x00;
-		t->getPixel(x, y)[2] = 0xff;
-	}
-
-	bool isRed(unsigned char* p)
-	{
-		return p[0] > 200;
-	}
-
-	bool isGreen(unsigned char* p)
-	{
-		return p[1] == 0;
-	}
-
-	bool isBlue(unsigned char* p)
-	{
-		return p[2] > 200;
-	}
-
 	bool isWhite(unsigned char* p)
 	{
 		float v = p[0];
@@ -98,7 +76,7 @@ public:
 			return false;
 		}
 		unsigned char *pixel = inputLayer->getPixel(posX, posY);
-		bool isNotWalkable = isGreen(pixel);
+		bool isNotWalkable = isBlack(pixel);
 		return !isNotWalkable;
 	}
 
