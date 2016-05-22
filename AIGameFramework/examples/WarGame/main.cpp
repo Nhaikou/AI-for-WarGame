@@ -24,7 +24,6 @@ private:
 	std::vector< yam2d::Ref<AutoAttackFlagCarryingBot> > m_autoAttackFlagCarryingBots;
 	PathFindingApp *pathFindingApp;
 	AIMapLayer *mapLayer;
-	AIMapLayer *movementLayer;
 
 public:
 	MyPlayerController()
@@ -97,28 +96,27 @@ public:
 			m_directMoverAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
 		}
 
-
+		// Map colors
 		uint8_t RED_PIXEL[4] = { 0xff, 0x00, 0x00, 0xff };
 		uint8_t GREEN_PIXEL[4] = { 0x00, 0xff, 0x00, 0xff };
 		uint8_t BLUE_PIXEL[4] = { 0x00, 0x00, 0xff, 0xff };
 		uint8_t TP_PIXEL[4] = { 0x00, 0x00, 0x00, 0x00 };
 
-		mapLayer = environmentInfo->getAILayer("GroundMoveSpeed");
-		pathFindingApp->setMapLayer(mapLayer);
+		//mapLayer = environmentInfo->getAILayer("GroundMoveSpeed");
+		//pathFindingApp->setMapLayer(mapLayer);
+		//// MadHatterAI
+		//for (size_t y = 0; y < mapLayer->getHeight(); y++)
+		//{
+		//	for (size_t x = 0; x < mapLayer->getWidth(); x++)
+		//	{
+		//		mapLayer->setPixel(x, y, TP_PIXEL);
+		//	}
+		//}
+
 		// MadHatterAI
-		for (size_t y = 0; y < mapLayer->getHeight(); y++)
-		{
-			for (size_t x = 0; x < mapLayer->getWidth(); x++)
-			{
-				mapLayer->setPixel(x, y, TP_PIXEL);
-			}
-		}
-
 		std::vector<slm::vec2> mapLayerPoints;
-
-		movementLayer= environmentInfo->getAILayer("GroundMoveSpeed"); // Pass this instead of image
-
-		pathFindingApp->setMapLayer(movementLayer);
+		mapLayer= environmentInfo->getAILayer("GroundMoveSpeed"); // Pass this instead of image
+		pathFindingApp->setMapLayer(mapLayer);
 
 		for (size_t i = 0; i < m_madHatterAIControllers.size(); i++)
 		{
@@ -126,12 +124,7 @@ public:
 
 		}
 
-	/*	for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
-		{
-			m_madHatterAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
-		}*/
-
-		/*
+	/*	
 		AIMapLayer* speedMap = environmentInfo->getAILayer("MyLayer");
 		speedMap->getLayer()->setOpacity(0.5f);
 
@@ -172,7 +165,7 @@ public:
 		for (size_t i = 0; i < m_madHatterAIControllers.size(); i++)
 		{
 			m_madHatterAIControllers[i]->resetTargetToShoot();
-			//m_madHatterAIControllers[i]->resetMoveTargetObject();
+			m_madHatterAIControllers[i]->resetMoveTargetObject();
 		}
 	}
 
@@ -371,11 +364,11 @@ int main(int argc, char *argv[])
 	//app.disableLayer("Ground");
 	app.disableLayer("ObjectSpawns");
 	app.disableLayer("GroundTypeColliders");
-	app.disableLayer("GroundMoveSpeed");
+	//app.disableLayer("GroundMoveSpeed");
 	//app.setLayerOpacity("DebugLayer", 0.7f); 
-	app.setLayerOpacity("GroundMoveSpeed", 0.5f); 
+	app.setLayerOpacity("GroundMoveSpeed", 0.7f); 
 	//app.setDefaultGame("level1.tmx", "MyAI", "DirectMoverAI", 4);
-	app.setDefaultGame("Level0.tmx", "MadHatterAI", "MadHatterAI", "YourNameHere", 4);
+	app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "MadHatterAI", "YourNameHere", 4);
 //	app.setDefaultGame("Level1.tmx", "AutoAttackFlagCarryingBot", "JoystickController", "YourNameHere", 4);
 //	app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "DirectMoverAI", "YourNameHere", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", "YourNameHere", 4);

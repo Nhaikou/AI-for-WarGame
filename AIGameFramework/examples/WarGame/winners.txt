@@ -8,3 +8,6 @@ AutoAttackFlagCarryingBot
 MadHatterAI
 MadHatterAI
 MadHatterAI
+MadHatterAI
+MadHatterAI
+MadHatterAI
