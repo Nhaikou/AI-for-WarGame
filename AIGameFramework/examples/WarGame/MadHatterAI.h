@@ -57,7 +57,7 @@ public:
 		{
 			// Move to position
 			slm::vec2 movePosition(mapPoints.back().x, mapPoints.back().y);
-			m_distanceToDestination = moveDirectToPosition(m_gameObjectToGo->getPosition(), m_reachTolerance);
+			m_distanceToDestination = moveDirectToPosition(movePosition, m_reachTolerance);
 
 			if (m_gameObjectToShoot != 0)
 			{
