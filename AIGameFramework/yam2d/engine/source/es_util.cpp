@@ -64,6 +64,16 @@ void esQuitApp(ESContext *esContext)
 	esContext->quitFlag = true;
 }
 
+
+void esMinimizeWindow(ESContext *esContext)
+{
+	(void)esContext;
+#if defined(_WIN32)
+	ShowWindow(esContext->hWnd, SW_MINIMIZE);
+#endif
+}
+
+
 void esRegisterInitFunc ( ESContext *esContext, bool (*initFunc) ( ESContext* ) )
 {
 	esContext->initFunc = initFunc;
@@ -142,6 +152,7 @@ void esLogEngineError( const char *formatStr, ... )
 
 #if defined(_WIN32) && defined(_DEBUG)
 	DebugBreak(); 
+#elif !defined(_DEBUG)
 #else
 	std::string s = buf;
 	throw std::string(s);

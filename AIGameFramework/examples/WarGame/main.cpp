@@ -13,15 +13,57 @@
 
 #include <Layer.h>
 
+
+class MyAI : public CharacterController
+{
+public:
+	MyAI(yam2d::GameObject* owner, GameController* gameController, BotType botType)
+		: CharacterController(owner, gameController, botType)
+	{
+	}
+
+	virtual ~MyAI(void)
+	{
+	}
+
+	virtual void onMessage(const std::string& msgName, yam2d::Object* eventObject)
+	{
+		// Call onMessage to base class
+		CharacterController::onMessage(msgName, eventObject);
+
+		// TODO: handle message...
+	}
+
+	// This virtual method is automatically called byt map/layer, when update is called from main.cpp
+	virtual void update(float deltaTime)
+	{
+		// Call update to base class
+		CharacterController::update(deltaTime);
+
+		// TODO: Update...
+	}
+
+private:
+
+};
+
+
+
+
+
+
+
 class MyPlayerController : public PlayerController
 {
 private:
 	std::string m_myTeamName;
-	//std::vector< yam2d::Ref<MyAI> > m_myAIControllers;
+	std::vector< yam2d::Ref<MyAI> > m_myAIControllers;
+	// MadHatterAI
 	std::vector< yam2d::Ref<MadHatterAI>> m_madHatterAIControllers;
 	std::vector< yam2d::Ref<JoystickController> > m_joystickControllers;
 	std::vector< yam2d::Ref<DirectMoverAI> > m_directMoverAIControllers;
 	std::vector< yam2d::Ref<AutoAttackFlagCarryingBot> > m_autoAttackFlagCarryingBots;
+
 	PathFindingApp *pathFindingApp;
 	AIMapLayer *mapLayer;
 
@@ -61,12 +103,20 @@ public:
 			return new CharacterController(ownerGameObject, gameController, type);
 		}
 
+		// MadHatterAI
 		if (playerName == "MadHatterAI")
 		{
 			MadHatterAI* m_madHatterAI = new MadHatterAI(ownerGameObject, gameController, type);
 			m_madHatterAI->setPathFindingApp(pathFindingApp);
 			m_madHatterAIControllers.push_back(m_madHatterAI);
 			return m_madHatterAI;
+		}
+
+		if (playerName == "MyAI")
+		{
+			MyAI* myAI = new MyAI(ownerGameObject, gameController, type);
+			m_myAIControllers.push_back(myAI);
+			return myAI;
 		}
 
 		if (playerName == "DirectMoverAI")
@@ -102,20 +152,9 @@ public:
 		uint8_t BLUE_PIXEL[4] = { 0x00, 0x00, 0xff, 0xff };
 		uint8_t TP_PIXEL[4] = { 0x00, 0x00, 0x00, 0x00 };
 
-		//mapLayer = environmentInfo->getAILayer("GroundMoveSpeed");
-		//pathFindingApp->setMapLayer(mapLayer);
-		//// MadHatterAI
-		//for (size_t y = 0; y < mapLayer->getHeight(); y++)
-		//{
-		//	for (size_t x = 0; x < mapLayer->getWidth(); x++)
-		//	{
-		//		mapLayer->setPixel(x, y, TP_PIXEL);
-		//	}
-		//}
-
 		// MadHatterAI
 		std::vector<slm::vec2> mapLayerPoints;
-		mapLayer= environmentInfo->getAILayer("GroundMoveSpeed"); // Pass this instead of image
+		mapLayer = environmentInfo->getAILayer("GroundMoveSpeed"); // Pass this instead of image
 		pathFindingApp->setMapLayer(mapLayer);
 
 		for (size_t i = 0; i < m_madHatterAIControllers.size(); i++)
@@ -124,7 +163,7 @@ public:
 
 		}
 
-	/*	
+		/*
 		AIMapLayer* speedMap = environmentInfo->getAILayer("MyLayer");
 		speedMap->getLayer()->setOpacity(0.5f);
 
@@ -235,7 +274,6 @@ public:
 				m_autoAttackFlagCarryingBots[i]->setTargetToShoot(itemEvent->getCharacterController()->getGameObject(), 1.9f, 0.05f);
 			}
 			
-
 			// MadHatterAI shoot
 			for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
 			{
@@ -251,7 +289,6 @@ public:
 				{
 					m_directMoverAIControllers[i]->setMoveTargetObject(homeBase, 1.0f);
 				}
-
 
 				// MadHatterAI
 				for (size_t i = 0; i < m_madHatterAIControllers.size(); ++i)
@@ -343,7 +380,7 @@ public:
 			TakingDamageEvent* damageEvent = dynamic_cast<TakingDamageEvent*>(eventObject);			
 			yam2d::GameObject* damageFromObject = damageEvent->getFromObject();
 			float newHealth = damageEvent->getNewHealth();
-			yam2d::esLogMessage("%s(team=%d) %s: fromObject=%s. New health: %3.1f", gameObject->getType().c_str(), teamIndex, eventName.c_str(), damageFromObject->getType().c_str(), newHealth);
+		//	yam2d::esLogMessage("%s(team=%d) %s: fromObject=%s. New health: %3.1f", gameObject->getType().c_str(), teamIndex, eventName.c_str(), damageFromObject->getType().c_str(), newHealth);
 		}
 		else if (eventName == "ZeroHealth")
 		{
@@ -360,23 +397,23 @@ public:
 
 int main(int argc, char *argv[])
 {
-	GameApp app(argc, argv, 1280, 800);
+	yam2d::Ref<GameApp> app = new GameApp(argc, argv, 1280, 800);
 	//app.disableLayer("Ground");
-	app.disableLayer("ObjectSpawns");
-	app.disableLayer("GroundTypeColliders");
-	//app.disableLayer("GroundMoveSpeed");
+	app->disableLayer("ObjectSpawns");
+	app->disableLayer("GroundTypeColliders");
+	app->disableLayer("GroundMoveSpeed");
 	//app.setLayerOpacity("DebugLayer", 0.7f); 
-	app.setLayerOpacity("GroundMoveSpeed", 0.5f); 
+	//app.setLayerOpacity("GroundMoveSpeed", 0.7f); 
 	//app.setDefaultGame("level1.tmx", "MyAI", "DirectMoverAI", 4);
-	app.setDefaultGame("Level0.tmx", "MadHatterAI", "MadHatterAI", "YourNameHere", 4);
+	app->setDefaultGame("Level0.tmx", "MadHatterAI", "MadHatterAI", "YourNameHere", 4);
 //	app.setDefaultGame("Level1.tmx", "AutoAttackFlagCarryingBot", "JoystickController", "YourNameHere", 4);
 //	app.setDefaultGame("Level0.tmx", "AutoAttackFlagCarryingBot", "DirectMoverAI", "YourNameHere", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", "YourNameHere", 4);
 //	app.setDefaultGame("Level0.tmx", "DirectMoverAI", "AutoAttackFlagCarryingBot", 4);
 	MyPlayerController player1Controller;
-	app.setPlayer1Controller(&player1Controller);
+	app->setPlayer1Controller(&player1Controller);
 	MyPlayerController player2Controller;
-	app.setPlayer2Controller(&player2Controller);
+	app->setPlayer2Controller(&player2Controller);
 
-	return app.run();
+	return app->run();
 }

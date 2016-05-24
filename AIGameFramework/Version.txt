@@ -1,3 +1,8 @@
+AIGameFramework version 0.3 2016.05.16:
+
+* See BeforeYouBegin.pdf	
+
+
 AIGameFramework version 0.2 2016.05.16:
 
 * API Changes:
@@ -18,3 +23,15 @@ AIGameFramework version 0.2 2016.05.16:
 	
 * Migration Guide from version 0.1:
 	- It is recommended to use new Visual Studio project from examples folder.
+
+AIGameFramework version 0.3 :
+* Bug fixes:
+    - Timeout bug fix: Had bug in code and 3 minutes limit did not work. Fixed now.
+	
+	
+	
+	
+	
+	
+	
+	
