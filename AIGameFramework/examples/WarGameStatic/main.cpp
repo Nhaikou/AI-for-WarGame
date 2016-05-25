@@ -8,6 +8,7 @@
 #include <JohnDoe.h>
 #include <MikkoRomppainen.h>
 #include <PassCourse.h>
+#include <NikoKinnunen.h>
 #include "GameApp.h"
 
 int main(int argc, char *argv[])
@@ -16,9 +17,9 @@ int main(int argc, char *argv[])
 	app->disableLayer("ObjectSpawns");
 	app->disableLayer("GroundTypeColliders");
 	app->disableLayer("GroundMoveSpeed");
-	app->setDefaultGame("Level0.tmx", "PassCourse", "JohnDoe", "JohnDoe", 4);
+	app->setDefaultGame("Level0.tmx", "PassCourse", "NikoKinnunen", "NikoKinnunen", 4);
 	app->setPlayer1Controller(PassCourse::createNewPlayer());
-	app->setPlayer2Controller(JohnDoe::createNewPlayer());
+	app->setPlayer2Controller(NikoKinnunen::createNewPlayer());
 
 	return app->run();
 }

@@ -54,7 +54,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../PassCourse;../MikkoRomppainen;../JohnDoe;$(ProjectDir)../../sdk;$(ProjectDir)../../yam2d/engine/external;$(ProjectDir)../../yam2d/engine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../NikoKinnunen;../PassCourse;../MikkoRomppainen;../JohnDoe;$(ProjectDir)../../sdk;$(ProjectDir)../../yam2d/engine/external;$(ProjectDir)../../yam2d/engine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAsManaged>false</CompileAsManaged>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -107,6 +107,9 @@
     </ProjectReference>
     <ProjectReference Include="..\MikkoRomppainen\MikkoRomppainen.vcxproj">
       <Project>{74a0e013-3733-406d-b92f-c7b8ccbfa0c4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\NikoKinnunen\NikoKinnunen.vcxproj">
+      <Project>{e0e4ce5e-2fee-467d-89df-bdb08632a511}</Project>
     </ProjectReference>
     <ProjectReference Include="..\PassCourse\PassCourse.vcxproj">
       <Project>{e6d5f2bb-3054-499c-abe7-9f6dfe48ea4e}</Project>
