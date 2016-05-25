@@ -341,6 +341,7 @@ public:
 			{
 				m_madHatterAIControllers[i]->resetTargetToShoot();
 				m_madHatterAIControllers[i]->setMoveTargetObject(dynamite, 1.0f);
+				m_madHatterAIControllers[i]->preferPickItem();
 			}
 		}
 		else
