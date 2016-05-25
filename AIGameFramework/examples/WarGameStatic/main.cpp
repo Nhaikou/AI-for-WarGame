@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
 	app->disableLayer("ObjectSpawns");
 	app->disableLayer("GroundTypeColliders");
 	app->disableLayer("GroundMoveSpeed");
-	app->setDefaultGame("Level0.tmx", "PassCourse", "NikoKinnunen", "NikoKinnunen", 4);
-	app->setPlayer1Controller(PassCourse::createNewPlayer());
-	app->setPlayer2Controller(NikoKinnunen::createNewPlayer());
+	app->setDefaultGame("Level0.tmx", "NikoKinnunen", "PassCourse", "NikoKinnunen", 4);
+	app->setPlayer1Controller(NikoKinnunen::createNewPlayer());
+	app->setPlayer2Controller(PassCourse::createNewPlayer());
 
 	return app->run();
 }

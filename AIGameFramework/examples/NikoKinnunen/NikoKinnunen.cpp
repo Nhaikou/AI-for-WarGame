@@ -202,23 +202,8 @@ namespace NikoKinnunen
 		// Called, when bots are spawn. Shall return correct player character controller for bot if given name.
 		virtual CharacterController* createPlayerCharacterController(GameController* gameController, yam2d::GameObject* ownerGameObject, const std::string& playerName, BotType type)
 		{
-			if (playerName == "JoystickController")
-			{
-				//if (m_joystickControllers.size()==0) // If only 1 joystick supported.
-				{
-					JoystickController* joystickController = new JoystickController(ownerGameObject, gameController, type, m_joystickControllers.size());
-					m_joystickControllers.push_back(joystickController);
-					return joystickController;
-				}
-			}
-
-			if (playerName == "CharacterController")
-			{
-				return new CharacterController(ownerGameObject, gameController, type);
-			}
-
 			// NikoKinnunenController
-			if (playerName == "NikoKinnunenController")
+			if (playerName == "NikoKinnunen")
 			{
 				NikoKinnunenController* m_NikoKinnunenController = new NikoKinnunenController(ownerGameObject, gameController, type);
 				m_NikoKinnunenController->setPathFindingApp(pathFindingApp);
