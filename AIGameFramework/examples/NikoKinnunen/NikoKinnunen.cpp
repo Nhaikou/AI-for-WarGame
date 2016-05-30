@@ -230,11 +230,26 @@ namespace NikoKinnunen
 			std::vector<slm::vec2> mapLayerPoints;
 			mapLayer = environmentInfo->getAILayer("GroundMoveSpeed"); // Pass this instead of image
 			pathFindingApp->setMapLayer(mapLayer);
-
-			for (size_t i = 0; i < m_NikoKinnunenControllerControllers.size(); i++)
+			const yam2d::GameObject* homeBase = environmentInfo->getMyHomeBase(this);
+			homeBase->getName();
+			
+			for (size_t i = 0; i < m_NikoKinnunenControllerControllers.size(); ++i)
 			{
-				m_NikoKinnunenControllerControllers[i]->setMoveTargetObject(dynamite, 1.0f);
+				if (m_NikoKinnunenControllerControllers[i]->isRobot())
+				{
+					m_NikoKinnunenControllerControllers[i]->setMoveTargetObject(homeBase, 3.0f);
 
+					/*if (m_NikoKinnunenControllerControllers[i]->getGameObject()->getName() == "BotSpawn0")
+					{
+						m_NikoKinnunenControllerControllers[i]->resetMoveTargetObject();
+						m_NikoKinnunenControllerControllers[i]->setMoveTargetObject(dynamite, 1.0f);
+					}*/
+					
+				}
+				else if (m_NikoKinnunenControllerControllers[i]->isSoldier())
+				{
+					m_NikoKinnunenControllerControllers[i]->setMoveTargetObject(dynamite, 1.0f);
+				}
 			}
 		}
 
@@ -245,7 +260,7 @@ namespace NikoKinnunen
 			yam2d::esLogMessage("onGameOver: %s wins!", gameResultString.c_str());
 
 			// NikoKinnunenController reset shooting
-			for (size_t i = 0; i < m_NikoKinnunenControllerControllers.size(); i++)
+			for (size_t i = 0; i < m_NikoKinnunenControllerControllers.size(); ++i)
 			{
 				m_NikoKinnunenControllerControllers[i]->resetTargetToShoot();
 				m_NikoKinnunenControllerControllers[i]->resetMoveTargetObject();
@@ -323,13 +338,13 @@ namespace NikoKinnunen
 				{
 					// My team picked item. 
 					// Go to enemy home base.
-					const yam2d::GameObject* homeBase = environmentInfo->getEnemyHomeBase(this);
+					const yam2d::GameObject* enemyBase = environmentInfo->getEnemyHomeBase(this);
 
 					// NikoKinnunenController
 					for (size_t i = 0; i < m_NikoKinnunenControllerControllers.size(); ++i)
 					{
 						m_NikoKinnunenControllerControllers[i]->resetTargetToShoot();
-						m_NikoKinnunenControllerControllers[i]->setMoveTargetObject(homeBase, 1.0f);
+						m_NikoKinnunenControllerControllers[i]->setMoveTargetObject(enemyBase, 1.0f);
 					}
 				}
 				else
